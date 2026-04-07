@@ -21,7 +21,12 @@ if __name__ == "__main__":
     date_seen="2026-04-01",
     url_or_contact="076 579 46 34"
     )
-    
+    #create multiple scams
+    Scam.objects.bulk_create([
+    Scam(title="scam A", description="some really bad scam...", scam_type="phishing", date_seen="2026-04-01"),
+    Scam(title="scam B", description="dangerous scan...", scam_type="sms", date_seen="2026-04-02"),
+    ])
+
     #read existing data
     scams = Scam.objects.all().values()
     df = pd.DataFrame(scams)
@@ -32,8 +37,9 @@ if __name__ == "__main__":
     Scam.objects.filter(date_seen__year=2026)
     
     #delete a scam
-    Scam.objects.get(title="Scam phone call").delete()
-
+    Scam.objects.get(title="scam B").delete()
+    Scam.objects.get(title="scam A").delete()
+    
     #read existing data
     scams = Scam.objects.all().values()
     df = pd.DataFrame(scams)
